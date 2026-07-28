@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dreh-das-rad — Aufnahme-Werkzeug</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    margin: 0; padding: 24px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+    background: Canvas; color: CanvasText;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; }
+  h1 { font-size: 1.3rem; margin: 0 0 4px; }
+  .lead { margin: 0 0 20px; opacity: 0.75; font-size: 0.9rem; }
+  fieldset { border: 1px solid rgba(128,128,128,0.4); border-radius: 10px; padding: 14px 16px; margin: 0 0 16px; }
+  legend { font-weight: 600; font-size: 0.9rem; padding: 0 6px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 3px; }
+  input, select, textarea { font: inherit; font-size: 0.9rem; width: 100%; padding: 6px 8px;
+    border: 1px solid rgba(128,128,128,0.5); border-radius: 7px; background: Canvas; color: CanvasText; }
+  textarea { min-height: 130px; resize: vertical; }
+  button { font: inherit; font-weight: 600; padding: 10px 22px; border: 0; border-radius: 999px;
+    background: #c62828; color: #fff; cursor: pointer; }
+  button:disabled { opacity: 0.5; cursor: progress; }
+  progress { width: 100%; height: 10px; }
+  .out { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 18px; }
+  .card { border: 1px solid rgba(128,128,128,0.4); border-radius: 10px; padding: 14px; }
+  .card h2 { font-size: 0.95rem; margin: 0 0 8px; }
+  .card img { max-width: 100%; border-radius: 6px; display: block; }
+  .meta { font-size: 0.82rem; opacity: 0.8; margin: 8px 0 0; }
+  .bad { color: #c0392b; font-weight: 600; }
+  a.dl { display: inline-block; margin-top: 8px; font-size: 0.88rem; }
+  canvas { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Aufnahme-Werkzeug</h1>
+  <p class="lead">
+    Nimmt einen Dreh mit exakt demselben Zeichner auf wie die App
+    (<code>js/wheel.js</code>) und schreibt <code>promo.gif</code> und
+    <code>promo.webp</code>. Beide landen im Download-Ordner — von dort nach
+    <code>assets/</code> kopieren.
+  </p>
+
+  <fieldset>
+    <legend>Rad</legend>
+    <div class="grid">
+      <div>
+        <label for="palette">Farbwelt</label>
+        <select id="palette"></select>
+      </div>
+      <div>
+        <label for="winner">Gewinner (Zeile)</label>
+        <input id="winner" type="number" value="1" min="1" step="1">
+      </div>
+      <div>
+        <label for="bg">Hintergrund</label>
+        <input id="bg" type="text" value="#17130F">
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <label for="options">Optionen (eine pro Zeile)</label>
+      <textarea id="options">Pizza
+Döner
+Pasta
+Sushi
+Burger
+Selber kochen</textarea>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Aufnahme</legend>
+    <div class="grid">
+      <div><label for="size">Breite/Höhe (px)</label><input id="size" type="number" value="360" min="120" max="900" step="10"></div>
+      <div><label for="fps">Bilder pro Sekunde</label><input id="fps" type="number" value="12" min="8" max="30"></div>
+      <div><label for="hold">Vorlauf (ms)</label><input id="hold" type="number" value="200" min="0" step="50"></div>
+      <div><label for="spin">Dreh (ms)</label><input id="spin" type="number" value="3000" min="500" step="100"></div>
+      <div><label for="celebrate">Jubel (ms)</label><input id="celebrate" type="number" value="600" min="0" step="100"></div>
+      <div><label for="quality">WebP-Qualität</label><input id="quality" type="number" value="0.7" min="0.3" max="1" step="0.05"></div>
+      <div><label for="colours">GIF-Farben</label><input id="colours" type="number" value="64" min="8" max="256" step="8"></div>
+    </div>
+    <p class="meta">
+      Der Dreh endet bei genau derselben Radstellung, bei der er beginnt — dadurch
+      läuft die Schleife ohne sichtbaren Sprung.
+    </p>
+    <p style="margin:14px 0 0"><button id="go">Aufnehmen</button></p>
+    <p style="margin:10px 0 0"><progress id="bar" value="0" max="1" hidden></progress></p>
+    <p class="meta" id="status"></p>
+  </fieldset>
+
+  <div class="out" id="out" hidden>
+    <div class="card">
+      <h2>promo.gif</h2>
+      <img id="gifImg" alt="GIF-Vorschau">
+      <p class="meta" id="gifMeta"></p>
+      <a class="dl" id="gifLink" download="promo.gif">herunterladen</a>
+    </div>
+    <div class="card">
+      <h2>promo.webp</h2>
+      <img id="webpImg" alt="WebP-Vorschau">
+      <p class="meta" id="webpMeta"></p>
+      <a class="dl" id="webpLink" download="promo.webp">herunterladen</a>
+    </div>
+  </div>
+</div>
+
+<canvas id="frame"></canvas>
+
+<script src="../js/wheel.js"></script>
+<script src="encoders.js"></script>
+<script>
+'use strict';
+(function () {
+  var TAU = Math.PI * 2;
+  var $ = function (id) { return document.getElementById(id); };
+
+  Wheel.PALETTE_IDS.forEach(function (id) {
+    var o = document.createElement('option');
+    o.value = id;
+    o.textContent = id;
+    $('palette').appendChild(o);
+  });
+
+  function status(msg) { $('status').textContent = msg; }
+
+  function blobToBuffer(blob) {
+    return blob.arrayBuffer ? blob.arrayBuffer() : new Response(blob).arrayBuffer();
+  }
+
+  function canvasToWebp(canvas, quality) {
+    return new Promise(function (resolve, reject) {
+      canvas.toBlob(function (blob) {
+        if (!blob) { reject(new Error('toBlob failed')); return; }
+        resolve(blob);
+      }, 'image/webp', quality);
+    });
+  }
+
+  $('go').addEventListener('click', async function () {
+    var btn = $('go');
+    btn.disabled = true;
+    $('out').hidden = true;
+    $('bar').hidden = false;
+    $('bar').value = 0;
+
+    try {
+      var size = Math.max(120, +$('size').value || 420);
+      var fps = Math.max(8, +$('fps').value || 16);
+      var holdMs = Math.max(0, +$('hold').value || 0);
+      var spinMs = Math.max(500, +$('spin').value || 3000);
+      var celebrateMs = Math.max(0, +$('celebrate').value || 0);
+      var quality = Math.min(1, Math.max(0.3, +$('quality').value || 0.85));
+      var paletteId = $('palette').value;
+      var bg = $('bg').value.trim() || '#17130F';
+
+      var parsed = Wheel.parse($('options').value);
+      var items = parsed.items;
+      if (items.length < 2) { throw new Error('Mindestens zwei Optionen nötig.'); }
+
+      var n = items.length;
+      var seg = TAU / n;
+      var winner = Math.min(n - 1, Math.max(0, (+$('winner').value || 1) - 1));
+
+      // Start where we will finish: the wheel makes whole turns, so the last
+      // frame lines up with the first and the loop does not jump.
+      var rot0 = -Math.PI / 2 - (winner + 0.5) * seg;
+      var turns = 5;
+      var delta = turns * TAU;
+      var amp = Math.min(0.014, seg * 0.15);
+
+      var canvas = $('frame');
+      canvas.width = size;
+      canvas.height = size;
+      var ctx = canvas.getContext('2d', { alpha: false });
+
+      var totalMs = holdMs + spinMs + celebrateMs;
+      var frameMs = 1000 / fps;
+      var frameCount = Math.max(2, Math.round(totalMs / frameMs));
+
+      var confetti = new Wheel.Confetti(Wheel.PALETTES[paletteId].seg);
+      var burst = false;
+      var pointerKick = 0;
+      var prevIdx = null;
+      var rgbaFrames = [];
+      var webpBuffers = [];
+
+      for (var f = 0; f < frameCount; f++) {
+        var tMs = f * frameMs;
+        var dt = frameMs / 1000;
+
+        var rot = rot0;
+        var lampMode = 'idle';
+        var lampT = 0;
+        var winnerIdx = null;
+
+        if (tMs >= holdMs && tMs < holdMs + spinMs) {
+          var t = (tMs - holdMs) / spinMs;
+          var wob = 0;
+          if (t > 0.88) {
+            var u = (t - 0.88) / 0.12;
+            wob = amp * Math.sin(u * Math.PI * 3) * (1 - u);
+          }
+          rot = rot0 + delta * Wheel.easeSpin(t) + wob;
+        } else if (tMs >= holdMs + spinMs) {
+          rot = rot0 + delta;
+          lampMode = 'win';
+          lampT = (tMs - holdMs - spinMs) / 1000;
+          winnerIdx = winner;
+          if (!burst) {
+            confetti.burst(size / 2, size * 0.42, 90, 2.6);
+            burst = true;
+          }
+        }
+
+        // same peg-kick behaviour as the app, so the pointer flicks identically
+        var local = ((-Math.PI / 2 - rot) % TAU + TAU) % TAU;
+        var idx = Math.floor(local / seg);
+        if (prevIdx !== null && idx !== prevIdx) { pointerKick = 1; }
+        else { pointerKick *= Math.pow(0.02, dt); }
+        prevIdx = idx;
+
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, size, size);
+        Wheel.draw(ctx, size, size, {
+          items: items, rot: rot, palette: paletteId, dark: true,
+          lampMode: lampMode, lampT: lampT, pointerKick: pointerKick,
+          winner: winnerIdx, still: false
+        });
+        confetti.update(dt);
+        confetti.draw(ctx);
+
+        rgbaFrames.push(ctx.getImageData(0, 0, size, size).data);
+        webpBuffers.push(await blobToBuffer(await canvasToWebp(canvas, quality)));
+
+        $('bar').value = (f + 1) / frameCount * 0.7;
+        status('Bild ' + (f + 1) + ' von ' + frameCount + ' …');
+        if (f % 8 === 0) { await new Promise(function (r) { setTimeout(r, 0); }); }
+      }
+
+      status('Farbpalette wird bestimmt …');
+      await new Promise(function (r) { setTimeout(r, 0); });
+
+      var gif = new GifEncoder(size, size);
+      // sample every third frame: enough to see every colour, three times faster
+      gif.buildPalette(rgbaFrames.filter(function (_, i) { return i % 3 === 0; }),
+        Math.min(256, Math.max(8, +$('colours').value || 64)));
+      $('bar').value = 0.8;
+
+      for (var g = 0; g < rgbaFrames.length; g++) {
+        gif.addFrame(rgbaFrames[g], frameMs);
+        if (g % 10 === 0) {
+          status('GIF: Bild ' + (g + 1) + ' von ' + rgbaFrames.length + ' …');
+          $('bar').value = 0.8 + (g / rgbaFrames.length) * 0.15;
+          await new Promise(function (r) { setTimeout(r, 0); });
+        }
+      }
+
+      status('GIF wird geschrieben …');
+      await new Promise(function (r) { setTimeout(r, 0); });
+      var gifBlob = gif.render();
+
+      status('WebP wird zusammengesetzt …');
+      var webpBlob = null;
+      var webpError = null;
+      try {
+        webpBlob = webpAnimate(webpBuffers, size, size, Math.round(frameMs), 0);
+      } catch (e) {
+        webpError = e.message;
+      }
+
+      $('bar').value = 1;
+      show('gif', gifBlob, null, frameCount, totalMs);
+      show('webp', webpBlob, webpError, frameCount, totalMs);
+      $('out').hidden = false;
+      status('Fertig.');
+    } catch (err) {
+      status('Fehlgeschlagen: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      $('bar').hidden = true;
+    }
+  });
+
+  function show(kind, blob, error, frames, totalMs) {
+    var img = $(kind + 'Img');
+    var meta = $(kind + 'Meta');
+    var link = $(kind + 'Link');
+
+    if (!blob) {
+      img.removeAttribute('src');
+      meta.className = 'meta bad';
+      meta.textContent = 'Nicht erzeugt: ' + error;
+      link.removeAttribute('href');
+      return;
+    }
+
+    var url = URL.createObjectURL(blob);
+    img.src = url;
+    link.href = url;
+    meta.className = 'meta';
+    meta.textContent = (blob.size / 1024).toFixed(0) + ' KB · ' + frames + ' Bilder · ' +
+      (totalMs / 1000).toFixed(1) + ' s';
+
+    // a container the browser cannot decode would fail silently otherwise
+    img.onerror = function () {
+      meta.className = 'meta bad';
+      meta.textContent = 'Datei erzeugt (' + (blob.size / 1024).toFixed(0) +
+        ' KB), aber der Browser kann sie nicht anzeigen — nicht verwenden.';
+    };
+  }
+})();
+</script>
+</body>
+</html>

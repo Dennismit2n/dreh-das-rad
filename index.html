@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Dreh das Rad — Entscheidungs-Glücksrad / decision wheel</title>
+  <meta name="description" content="Type in your options, spin the wheel, let fate decide — no sign-up, nothing uploaded. / Optionen eintippen, Rad drehen, das Los entscheidet – ohne Anmeldung, ohne Upload.">
+  <link rel="canonical" href="https://dennismit2n.github.io/dreh-das-rad/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Dreh das Rad — the decision wheel">
+  <meta property="og:description" content="Options in, wheel spins, fate decides. 4 colour worlds, 12 languages, shareable as a link — everything stays in your browser.">
+  <meta property="og:url" content="https://dennismit2n.github.io/dreh-das-rad/">
+  <meta property="og:image" content="https://dennismit2n.github.io/dreh-das-rad/assets/promo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#c62828">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="./icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="./css/style.css">
+  <!-- Theme before first paint: stored choice wins, otherwise system decides via CSS. -->
+  <script>try{var t=localStorage.getItem('dreh-das-rad.theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+  <!-- Analytics: GoatCounter (anonymous, cookieless — disclosed in the footer).
+       count.js is vendored locally; the only external request is the count pixel.
+       Wheel data lives in the #hash, which is never sent to any server.
+       The title is pinned to a static value so a personalised document.title
+       (the user's question) can never reach the count pixel. -->
+  <script data-goatcounter="https://dennis-mit-2n.goatcounter.com/count" data-goatcounter-settings='{"title": "dreh-das-rad"}' async src="./js/vendor/count.js"></script>
+</head>
+<body>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<div class="page">
+  <header class="site-header">
+    <div class="brand">
+      <svg class="brand-icon" viewBox="0 0 48 48" aria-hidden="true">
+        <rect x="2" y="2" width="44" height="44" rx="11" fill="#7a2e12"/>
+        <circle cx="24" cy="27" r="16.5" fill="#c62828"/>
+        <path d="M24 27 L24 12 A15 15 0 0 1 36.99 19.5 Z" fill="#f5c518"/>
+        <path d="M24 27 L36.99 34.5 A15 15 0 0 1 24 42 Z" fill="#f5c518"/>
+        <path d="M24 27 L11.01 34.5 A15 15 0 0 1 11.01 19.5 Z" fill="#f5c518"/>
+        <path d="M24 27 L36.99 19.5 A15 15 0 0 1 36.99 34.5 Z" fill="#0b7f8a"/>
+        <path d="M24 27 L24 42 A15 15 0 0 1 11.01 34.5 Z" fill="#fdf1dd"/>
+        <path d="M24 27 L11.01 19.5 A15 15 0 0 1 24 12 Z" fill="#0b7f8a"/>
+        <circle cx="24" cy="27" r="3.6" fill="#fdf1dd"/>
+        <path d="M24 15.5 L19.6 5.5 L28.4 5.5 Z" fill="#fdf1dd"/>
+      </svg>
+      <div>
+        <h1>Dreh das Rad</h1>
+        <p class="tagline" data-i18n="tagline">Drop in your options, spin the wheel — fate decides.</p>
+      </div>
+    </div>
+    <div class="header-controls">
+      <button type="button" id="btnSound" class="icon-btn" aria-pressed="true" data-i18n-aria="soundOnLabel">
+        <svg class="ico-on" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12zM14 2.1v2.06a8 8 0 0 1 0 15.68v2.06a10 10 0 0 0 0-19.8z" fill="currentColor"/></svg>
+        <svg class="ico-off" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm15.07-.07-1.41 1.41L19.24 12l-1.58 1.66 1.41 1.41L20.66 13.4l1.58 1.67 1.41-1.41L22.07 12l1.58-1.66-1.41-1.41-1.58 1.67-1.59-1.67z" fill="currentColor"/></svg>
+      </button>
+      <label class="sel-wrap">
+        <span class="visually-hidden" data-i18n="themeLabel">Appearance</span>
+        <select id="themeSelect" data-i18n-aria="themeLabel"></select>
+      </label>
+      <label class="sel-wrap">
+        <span class="visually-hidden" data-i18n="langLabel">Language</span>
+        <select id="langSelect" data-i18n-aria="langLabel"></select>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <!-- ── the wheel ────────────────────────────────────────────── -->
+    <section class="stage">
+      <h2 class="question-echo" id="questionEcho" hidden></h2>
+
+      <div class="wheel-wrap">
+        <canvas id="wheel" width="520" height="520"></canvas>
+
+        <div class="result-card" id="resultCard" hidden>
+          <p class="result-lead" data-i18n="resultLead">Fate says:</p>
+          <p class="result-name" id="resultName"></p>
+          <div class="result-actions">
+            <button type="button" id="btnAgain" class="btn primary" data-i18n="btnSpinAgain">Spin again</button>
+            <button type="button" id="btnRemove" class="btn" data-i18n="btnRemove">Take it out</button>
+            <button type="button" id="btnCopyResult" class="btn" data-i18n="btnCopyResult">Copy result</button>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" id="btnSpin" class="spin-btn" data-i18n="btnSpin">Spin</button>
+
+      <p class="motion-row" id="motionRow" hidden>
+        <label class="check">
+          <input type="checkbox" id="motionToggle">
+          <span data-i18n="motionLabel">Let the wheel spin</span>
+        </label>
+        <span class="motion-hint" data-i18n="motionHint">Your device has animations turned off.</span>
+      </p>
+
+      <p class="visually-hidden" id="spinStatus" role="status" aria-live="polite"></p>
+    </section>
+
+    <div class="side">
+      <!-- ── options ───────────────────────────────────────────── -->
+      <section class="panel">
+        <div class="field">
+          <label for="questionInput">
+            <span data-i18n="questionLabel">Question</span>
+            <span class="opt" data-i18n="questionOptional">(optional)</span>
+          </label>
+          <input id="questionInput" type="text" maxlength="90" data-i18n-ph="questionPlaceholder" autocapitalize="sentences">
+        </div>
+
+        <div class="field">
+          <label for="optionsInput">
+            <span data-i18n="optionsLabel">Options</span>
+            <span class="count" id="countLabel"></span>
+          </label>
+          <textarea id="optionsInput" rows="8" spellcheck="false" data-i18n-ph="optionsPlaceholder" aria-describedby="weightHint"></textarea>
+          <p class="hint" id="weightHint" data-i18n="weightHint">Tip: “Pizza x3” takes up three slots.</p>
+          <p class="note" id="noteBox" role="status" hidden></p>
+          <p class="error" id="errBox" role="alert" hidden></p>
+        </div>
+
+        <div class="presets">
+          <h3 data-i18n="presetsLabel">Quick start</h3>
+          <div class="preset-row" id="presetRow"></div>
+        </div>
+
+        <label class="check auto-remove">
+          <input type="checkbox" id="autoRemove">
+          <span data-i18n="autoRemoveLabel">Remove the winner automatically</span>
+        </label>
+
+        <div class="drawn" id="drawnBox" hidden>
+          <div class="drawn-head">
+            <h3 data-i18n="drawnHeading">Already drawn</h3>
+            <button type="button" id="btnResetDrawn" class="btn small" data-i18n="btnResetDrawn">Bring all back</button>
+          </div>
+          <ol class="drawn-list" id="drawnList"></ol>
+          <p class="remaining" id="remainingLabel"></p>
+        </div>
+
+        <fieldset class="palettes">
+          <legend data-i18n="paletteLabel">Colours</legend>
+          <div class="palette-grid" id="paletteGrid"></div>
+        </fieldset>
+      </section>
+
+      <!-- ── share ─────────────────────────────────────────────── -->
+      <section class="panel share-box">
+        <h3 data-i18n="shareHeading">Share the wheel</h3>
+        <div class="link-row">
+          <input id="linkOut" type="text" readonly data-i18n-aria="linkLabel">
+          <button type="button" id="btnCopy" class="btn primary">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M16 1H6a2 2 0 0 0-2 2v12h2V3h10V1zm3 4H10a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16h-9V7h9v14z" fill="currentColor"/></svg>
+            <span data-i18n="btnCopy">Copy link</span>
+          </button>
+        </div>
+        <div class="share-actions">
+          <button type="button" id="btnShare" class="btn" hidden>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M18 8a3 3 0 1 0-2.83-4H15a3 3 0 0 0 .04.49L8.9 7.56a3 3 0 1 0 0 8.88l6.15 3.07A3 3 0 1 0 18 16a3 3 0 0 0-2.15.91l-5.9-2.95a3 3 0 0 0 0-1.92l5.9-2.95A3 3 0 0 0 18 8z" fill="currentColor"/></svg>
+            <span data-i18n="btnShare">Share</span>
+          </button>
+          <button type="button" id="btnQr" class="btn" aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-5 0h3v2h2v3h-2v-2h-3v-3zm3 5h2v3h-2v-3zm3 0h2v3h-2v-3z" fill="currentColor"/></svg>
+            <span data-i18n="btnQr">QR code</span>
+          </button>
+        </div>
+        <div class="qr-wrap" id="qrWrap" hidden>
+          <div class="qr-box" id="qrBox" role="img" data-i18n-aria="btnQr"></div>
+          <p class="qr-hint" data-i18n="qrHint">Scan to open the same wheel</p>
+        </div>
+        <p class="privacy-note">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 8V7a3 3 0 1 1 6 0v3H9z" fill="currentColor"/></svg>
+          <span><span data-i18n="privacyNote">Your options live only in the link.</span>
+          <span data-i18n="offlineNote">Even works offline.</span></span>
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <a href="https://github.com/Dennismit2n/dreh-das-rad" rel="noopener">
+      <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.42 7.42 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z" fill="currentColor"/></svg>
+      <span data-i18n="footerSource">Open source on GitHub</span>
+    </a>
+    <span class="sep">·</span>
+    <span data-i18n="footerTranslate">Some translations are machine-generated – corrections welcome!</span>
+    <span class="sep">·</span>
+    <span data-i18n="footerAnalytics">Anonymous visit counting.</span>
+  </footer>
+</div>
+
+<p class="toast" id="toast" role="status"></p>
+
+<script src="./js/vendor/qrcode.js"></script>
+<script src="./js/vendor/qrcode_UTF8.js"></script>
+<script src="./js/i18n.js"></script>
+<script src="./js/wheel.js"></script>
+<script src="./js/app.js"></script>
+</body>
+</html>
