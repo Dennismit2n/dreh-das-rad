@@ -81,17 +81,6 @@
         </button>
       </div>
 
-      <!-- below the wheel on purpose: the card must never cover the winning segment -->
-      <div class="result-card" id="resultCard" hidden>
-        <p class="result-lead" data-i18n="resultLead">Fate says:</p>
-        <p class="result-name" id="resultName"></p>
-        <div class="result-actions">
-          <button type="button" id="btnAgain" class="btn primary" data-i18n="btnSpinAgain">Spin again</button>
-          <button type="button" id="btnRemove" class="btn" data-i18n="btnRemove">Take it out</button>
-          <button type="button" id="btnCopyResult" class="btn" data-i18n="btnCopyResult">Copy result</button>
-        </div>
-      </div>
-
       <button type="button" id="btnSpin" class="spin-btn" data-i18n="btnSpin">Spin</button>
 
       <p class="motion-row" id="motionRow" hidden>
@@ -106,6 +95,18 @@
     </section>
 
     <div class="side">
+      <!-- ── result: tops the right column on desktop, sits right under the
+           spin button on phones; in fullscreen, JS pulls it onto the stage ── -->
+      <div class="result-card" id="resultCard" hidden>
+        <p class="result-lead" data-i18n="resultLead">Fate says:</p>
+        <p class="result-name" id="resultName"></p>
+        <div class="result-actions">
+          <button type="button" id="btnAgain" class="btn primary" data-i18n="btnSpinAgain">Spin again</button>
+          <button type="button" id="btnRemove" class="btn" data-i18n="btnRemove">Take it out</button>
+          <button type="button" id="btnCopyResult" class="btn" data-i18n="btnCopyResult">Copy result</button>
+        </div>
+      </div>
+
       <!-- ── options ───────────────────────────────────────────── -->
       <section class="panel">
         <div class="field">

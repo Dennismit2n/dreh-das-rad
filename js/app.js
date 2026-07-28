@@ -715,6 +715,7 @@
 
   /* ── fullscreen ─────────────────────────────────────────────────*/
   var stageEl = $('stage');
+  var sideEl = document.querySelector('.side');
 
   function fsActive() {
     return document.fullscreenElement === stageEl || document.webkitFullscreenElement === stageEl;
@@ -727,6 +728,10 @@
   function fsChanged() {
     el.fs.setAttribute('aria-pressed', String(fsActive()));
     fsLabel();
+    // The card normally lives in the side column, which fullscreen does not
+    // show — pull it onto the stage for the duration, put it back afterwards.
+    if (fsActive()) { stageEl.insertBefore(el.card, el.spin); }
+    else { sideEl.insertBefore(el.card, sideEl.firstElementChild); }
     // the stage resizes with the transition into/out of the top layer
     requestAnimationFrame(function () { sizeCanvases(); render(); });
   }

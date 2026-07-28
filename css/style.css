@@ -196,18 +196,49 @@ main {
 
 .fs-btn { position: absolute; top: 0; right: 0; }
 
-/* element fullscreen: the stage fills the screen, the wheel grows with it.
-   Two identical blocks because Safari still needs the -webkit pseudo-class
-   and a comma-joined unknown selector would invalidate the whole rule. */
-.stage:fullscreen { background: var(--bg); justify-content: center; padding: 24px; overflow: auto; }
-.stage:fullscreen .wheel-wrap { max-width: min(76vh, 94vw); }
-.stage:-webkit-full-screen { background: var(--bg); justify-content: center; padding: 24px; overflow: auto; }
-.stage:-webkit-full-screen .wheel-wrap { max-width: min(76vh, 94vw); }
+/* Element fullscreen. justify-content:center used to clip the top of the
+   wheel on screens shorter than the content (classic flexbox centre-overflow),
+   so everything is anchored to the top now; centring comes from spacer rows. */
+.stage:fullscreen { background: var(--bg); padding: 20px; overflow: auto; justify-content: flex-start; }
+.stage:fullscreen .wheel-wrap { max-width: min(58vh, 94vw); }
 
-/* Result card sits BELOW the wheel, in flow — Dennis' correction after v1:
-   floating over the hub covered the winning segment. */
+@media (orientation: landscape) {
+  /* party-table mode: wheel on the left, result column on the right;
+     the 1fr spacer rows centre the card block against the wheel */
+  .stage:fullscreen {
+    display: grid;
+    grid-template:
+      "echo  echo"   auto
+      "wheel ."      1fr
+      "wheel card"   auto
+      "wheel spin"   auto
+      "wheel motion" auto
+      "wheel ."      1fr
+      / auto minmax(280px, 420px);
+    column-gap: 48px;
+    row-gap: 14px;
+    align-items: center;
+    justify-content: center;
+    align-content: start;
+  }
+  .stage:fullscreen .question-echo { grid-area: echo; }
+  .stage:fullscreen .wheel-wrap { grid-area: wheel; max-width: none; width: min(80vh, 56vw); }
+  .stage:fullscreen .result-card { grid-area: card; }
+  .stage:fullscreen .spin-btn { grid-area: spin; justify-self: center; }
+  .stage:fullscreen .motion-row { grid-area: motion; }
+}
+
+/* old-Safari fallback (-webkit pseudo-class; a comma-joined unknown selector
+   would invalidate the rule): plain top-anchored column, nothing clipped */
+.stage:-webkit-full-screen { background: var(--bg); padding: 20px; overflow: auto; justify-content: flex-start; }
+.stage:-webkit-full-screen .wheel-wrap { max-width: min(58vh, 94vw); }
+
+/* Result card: top of the right column on desktop, below the spin button on
+   phones (Dennis' layout call after v2 — never over or under the wheel). */
 .result-card {
-  width: min(100%, 380px);
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
   padding: 16px 16px 14px;
   text-align: center;
   background: var(--panel);
