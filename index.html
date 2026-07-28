@@ -29,8 +29,6 @@
 </head>
 <body>
 
-<canvas id="fx" aria-hidden="true"></canvas>
-
 <div class="page">
   <header class="site-header">
     <div class="brand">
@@ -69,20 +67,28 @@
 
   <main>
     <!-- ── the wheel ────────────────────────────────────────────── -->
-    <section class="stage">
+    <section class="stage" id="stage">
+      <!-- lives inside the stage so confetti still renders in fullscreen (top layer) -->
+      <canvas id="fx" aria-hidden="true"></canvas>
+
       <h2 class="question-echo" id="questionEcho" hidden></h2>
 
       <div class="wheel-wrap">
         <canvas id="wheel" width="520" height="520"></canvas>
+        <button type="button" id="btnFs" class="icon-btn fs-btn" aria-pressed="false" hidden>
+          <svg class="ico-on" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" fill="currentColor"/></svg>
+          <svg class="ico-off" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" fill="currentColor"/></svg>
+        </button>
+      </div>
 
-        <div class="result-card" id="resultCard" hidden>
-          <p class="result-lead" data-i18n="resultLead">Fate says:</p>
-          <p class="result-name" id="resultName"></p>
-          <div class="result-actions">
-            <button type="button" id="btnAgain" class="btn primary" data-i18n="btnSpinAgain">Spin again</button>
-            <button type="button" id="btnRemove" class="btn" data-i18n="btnRemove">Take it out</button>
-            <button type="button" id="btnCopyResult" class="btn" data-i18n="btnCopyResult">Copy result</button>
-          </div>
+      <!-- below the wheel on purpose: the card must never cover the winning segment -->
+      <div class="result-card" id="resultCard" hidden>
+        <p class="result-lead" data-i18n="resultLead">Fate says:</p>
+        <p class="result-name" id="resultName"></p>
+        <div class="result-actions">
+          <button type="button" id="btnAgain" class="btn primary" data-i18n="btnSpinAgain">Spin again</button>
+          <button type="button" id="btnRemove" class="btn" data-i18n="btnRemove">Take it out</button>
+          <button type="button" id="btnCopyResult" class="btn" data-i18n="btnCopyResult">Copy result</button>
         </div>
       </div>
 
@@ -126,10 +132,16 @@
           <div class="preset-row" id="presetRow"></div>
         </div>
 
-        <label class="check auto-remove">
-          <input type="checkbox" id="autoRemove">
-          <span data-i18n="autoRemoveLabel">Remove the winner automatically</span>
-        </label>
+        <div class="row-split">
+          <label class="check auto-remove">
+            <input type="checkbox" id="autoRemove">
+            <span data-i18n="autoRemoveLabel">Remove the winner automatically</span>
+          </label>
+          <button type="button" id="btnShuffle" class="btn small">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10.59 9.17 5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41-1.41 1.42 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z" fill="currentColor"/></svg>
+            <span data-i18n="btnShuffle">Shuffle</span>
+          </button>
+        </div>
 
         <div class="drawn" id="drawnBox" hidden>
           <div class="drawn-head">
@@ -175,6 +187,15 @@
           <span><span data-i18n="privacyNote">Your options live only in the link.</span>
           <span data-i18n="offlineNote">Even works offline.</span></span>
         </p>
+      </section>
+
+      <!-- ── recent spins (this session only, never stored) ────── -->
+      <section class="panel" id="historyBox" hidden>
+        <div class="drawn-head">
+          <h3 data-i18n="historyHeading">Recent spins</h3>
+          <button type="button" id="btnClearHistory" class="btn small" data-i18n="btnClearHistory">Clear</button>
+        </div>
+        <ol class="history-list" id="historyList"></ol>
       </section>
     </div>
   </main>

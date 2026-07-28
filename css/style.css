@@ -194,13 +194,20 @@ main {
 }
 #wheel:active { cursor: grabbing; }
 
-/* result card floats over the hub — the wheel stays visible behind it */
+.fs-btn { position: absolute; top: 0; right: 0; }
+
+/* element fullscreen: the stage fills the screen, the wheel grows with it.
+   Two identical blocks because Safari still needs the -webkit pseudo-class
+   and a comma-joined unknown selector would invalidate the whole rule. */
+.stage:fullscreen { background: var(--bg); justify-content: center; padding: 24px; overflow: auto; }
+.stage:fullscreen .wheel-wrap { max-width: min(76vh, 94vw); }
+.stage:-webkit-full-screen { background: var(--bg); justify-content: center; padding: 24px; overflow: auto; }
+.stage:-webkit-full-screen .wheel-wrap { max-width: min(76vh, 94vw); }
+
+/* Result card sits BELOW the wheel, in flow — Dennis' correction after v1:
+   floating over the hub covered the winning segment. */
 .result-card {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: min(84%, 330px);
+  width: min(100%, 380px);
   padding: 16px 16px 14px;
   text-align: center;
   background: var(--panel);
@@ -211,8 +218,8 @@ main {
 }
 
 @keyframes pop {
-  from { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
-  to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 .result-lead { margin: 0; font-size: 0.82rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.07em; }
@@ -300,7 +307,14 @@ main {
 /* ── checkboxes ─────────────────────────────────────────── */
 .check { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; cursor: pointer; }
 .check input { width: 17px; height: 17px; accent-color: var(--accent-fill); cursor: pointer; }
-.auto-remove { margin-top: 14px; }
+.row-split {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
 
 /* ── drawn list ─────────────────────────────────────────── */
 .drawn {
@@ -313,6 +327,12 @@ main {
 .drawn-list { margin: 8px 0 0; padding-left: 22px; font-size: 0.9rem; }
 .drawn-list li { margin-bottom: 2px; overflow-wrap: anywhere; }
 .remaining { margin: 8px 0 0; font-size: 0.82rem; color: var(--text-soft); }
+
+/* ── recent spins ───────────────────────────────────────── */
+.history-list { list-style: none; margin: 8px 0 0; padding: 0; font-size: 0.9rem; }
+.history-list li { display: flex; gap: 10px; margin-bottom: 2px; }
+.history-list .h-time { color: var(--text-soft); font-variant-numeric: tabular-nums; flex: none; }
+.history-list span:last-child { overflow-wrap: anywhere; }
 
 /* ── palettes ───────────────────────────────────────────── */
 .palettes { margin: 16px 0 0; padding: 14px 0 0; border: 0; border-top: 1px solid var(--border); }

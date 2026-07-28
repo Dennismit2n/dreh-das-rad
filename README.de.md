@@ -12,6 +12,9 @@ Ein Entscheidungs-Glücksrad für alle Momente, in denen sich niemand festlegen 
 - 💡 **Jahrmarktlampen** — die Birnen am Kranz bleiben dunkel, bis das Rad steht; dann gehen sie schlagartig an und laufen im Lauflicht um
 - ⚖️ **Gewichtung** — „Papa kocht x3“ belegt drei Felder statt einem
 - ➖ **Ziehen und entfernen** — Gewinner vom Rad nehmen und weiterdrehen; Gezogene stehen nummeriert darunter, damit man in einem Rutsch eine ganze Reihenfolge auslost
+- 🕰️ **Letzte Drehs** — die jüngsten Ergebnisse mit Uhrzeit, falls jemand behauptet, es hätte „ganz sicher Pizza gesagt“; nur für diese Sitzung, wird nie gespeichert
+- 🔀 **Mischen** — ordnet das Rad mit einem Klick neu; die neue Reihenfolge wandert mit in den Teilen-Link
+- ⛶ **Vollbild** — das Rad groß für den Partytisch (wo der Browser es erlaubt; iPhones nicht)
 - 🎨 **4 Farbwelten** — Kirmes, Neon, Pastell und Tinte, jede in Hell und Dunkel auf Beschriftungskontrast geprüft
 - 🚀 **6 Schnellstart-Listen** — Ja/Nein, Kopf oder Zahl, Zahlen 1–10 sowie Essen, Was gucken? und Was machen?, für jede Sprache eigens zusammengestellt
 - 🔗 **Teilen als Link, QR-Code oder übers Handy-Teilen-Menü** — der Empfänger bekommt dasselbe Rad und dreht selbst
@@ -62,10 +65,6 @@ node tools/check-contrast.js && node tools/check-i18n.js
 `tools/gif-recorder.html` nimmt einen Dreh mit genau demselben Zeichner auf, den auch die App benutzt (`js/wheel.js`) — was in der Aufnahme zu sehen ist, bekommen Besucher also exakt so. Über den Dev-Server öffnen, **Aufnehmen** drücken, und es entstehen `promo.gif` und `promo.webp` (animiert) im Download-Ordner; von dort nach `assets/` verschieben.
 
 Der Dreh endet bei derselben Radstellung, bei der er beginnt — dadurch läuft die Schleife ohne sichtbaren Sprung. Die Voreinstellungen ergeben etwa 620 KB GIF und 440 KB WebP; eingebunden ist das WebP.
-
-## Ideen für später
-
-Ergebnis-Verlauf · Vollbild-Modus · Segmentreihenfolge mischen.
 
 ## Lizenz
 

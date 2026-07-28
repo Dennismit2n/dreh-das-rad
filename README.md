@@ -14,6 +14,9 @@ The name is German for "spin the wheel", and it stays that way in all twelve lan
 - 💡 **Fairground lights** — the bulbs on the rim sit dark until the wheel stops, then blast on and chase around the rim
 - ⚖️ **Weighting** — write `Papa cooks x3` and that option takes three slots instead of one
 - ➖ **Draw and remove** — take the winner off the wheel and keep spinning; drawn options are listed in order, so you can draw a whole running order in one go
+- 🕰️ **Recent spins** — the last results with timestamps, for when someone claims it "totally said pizza"; kept for this session only, never stored
+- 🔀 **Shuffle** — reorder the wheel with one click; the new order travels with the share link
+- ⛶ **Fullscreen** — blow the wheel up for the party table (where the browser supports it; iPhones don't)
 - 🎨 **4 colour worlds** — Fairground, Neon, Pastel and Ink, each checked for label contrast in both light and dark mode
 - 🚀 **6 quick-start lists** — Yes/No, coin flip, numbers 1–10 plus food, what to watch and what to do, curated separately for each language
 - 🔗 **Share as a link, QR code or via your phone's share sheet** — the recipient gets the same wheel and spins it themselves
@@ -64,10 +67,6 @@ node tools/check-contrast.js && node tools/check-i18n.js
 `tools/gif-recorder.html` records a spin using the very same renderer the app uses (`js/wheel.js`), so what you see in the recording is exactly what visitors get. Open it via the dev server, press **Aufnehmen**, and it writes both `promo.gif` and `promo.webp` (animated) to your downloads folder — move them into `assets/`.
 
 The spin is arranged to end at the same wheel position it started from, so the loop has no visible jump. Defaults produce roughly 620 KB of GIF and 440 KB of WebP; the README embeds the WebP.
-
-## Ideas for later
-
-Result history · fullscreen mode · shuffling the segment order.
 
 ## License
 

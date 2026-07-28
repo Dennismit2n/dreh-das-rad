@@ -23,9 +23,10 @@
     spin: $('btnSpin'), spinStatus: $('spinStatus'),
     card: $('resultCard'), resultName: $('resultName'),
     again: $('btnAgain'), remove: $('btnRemove'), copyResult: $('btnCopyResult'),
-    autoRemove: $('autoRemove'),
+    autoRemove: $('autoRemove'), shuffle: $('btnShuffle'), fs: $('btnFs'),
     drawnBox: $('drawnBox'), drawnList: $('drawnList'),
     resetDrawn: $('btnResetDrawn'), remaining: $('remainingLabel'),
+    historyBox: $('historyBox'), historyList: $('historyList'), clearHistory: $('btnClearHistory'),
     linkOut: $('linkOut'), copy: $('btnCopy'), share: $('btnShare'),
     qr: $('btnQr'), qrWrap: $('qrWrap'), qrBox: $('qrBox'),
     sound: $('btnSound'), motionRow: $('motionRow'), motionToggle: $('motionToggle'),
@@ -327,9 +328,13 @@
       state.drawn.push(state.winnerLabel);
       state.removedByAuto = true;
       renderDrawn();
+      // the pool just shrank, so the stored index would highlight the WRONG
+      // segment on the redrawn wheel — same reasoning as in toggleRemoved()
+      state.winner = null;
     }
 
     showCard();
+    pushHistory(state.winnerLabel);
     el.spinStatus.textContent = i18n.fmt('srResult', { a: state.winnerLabel });
     kick();
   }
@@ -375,6 +380,31 @@
       el.drawnList.appendChild(li);
     }
     el.remaining.textContent = i18n.fmt('remainingLabel', { n: uniqueRemaining() });
+  }
+
+  /* ── recent spins (session only, deliberately never persisted) ──*/
+  var history = [];
+
+  function pushHistory(label) {
+    history.unshift({ t: new Date(), label: label });
+    if (history.length > 12) { history.pop(); }
+    renderHistory();
+  }
+
+  function renderHistory() {
+    el.historyBox.hidden = history.length === 0;
+    el.historyList.innerHTML = '';
+    for (var i = 0; i < history.length; i++) {
+      var li = document.createElement('li');
+      var time = document.createElement('span');
+      time.className = 'h-time';
+      time.textContent = history[i].t.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      var name = document.createElement('span');
+      name.textContent = history[i].label;
+      li.appendChild(time);
+      li.appendChild(name);
+      el.historyList.appendChild(li);
+    }
   }
 
   /* ── input handling ─────────────────────────────────────────────*/
@@ -660,6 +690,63 @@
     store.set(KEY.auto, el.autoRemove.checked ? '1' : '0');
   });
 
+  el.clearHistory.addEventListener('click', function () {
+    history = [];
+    renderHistory();
+  });
+
+  // Shuffles the INPUT LINES (weights stay attached to their option), so the
+  // new order is visible in the textarea and travels with the share link.
+  // Drawn options survive — the pool filters by label, not by position.
+  el.shuffle.addEventListener('click', function () {
+    // mid-spin the target rotation is already fixed for the current order —
+    // reshuffling now would make the wheel stop on the wrong segment
+    if (state.spinning) { return; }
+    var lines = el.options.value.split('\n').filter(function (l) { return l.trim(); });
+    if (lines.length < 2) { return; }
+    for (var i = lines.length - 1; i > 0; i--) {
+      var j = randomIndex(i + 1);
+      var tmp = lines[i]; lines[i] = lines[j]; lines[j] = tmp;
+    }
+    el.options.value = lines.join('\n');
+    hideCard();
+    onInputChanged(true);
+  });
+
+  /* ── fullscreen ─────────────────────────────────────────────────*/
+  var stageEl = $('stage');
+
+  function fsActive() {
+    return document.fullscreenElement === stageEl || document.webkitFullscreenElement === stageEl;
+  }
+
+  function fsLabel() {
+    el.fs.setAttribute('aria-label', i18n.t(fsActive() ? 'btnFullscreenExit' : 'btnFullscreen'));
+  }
+
+  function fsChanged() {
+    el.fs.setAttribute('aria-pressed', String(fsActive()));
+    fsLabel();
+    // the stage resizes with the transition into/out of the top layer
+    requestAnimationFrame(function () { sizeCanvases(); render(); });
+  }
+
+  // iPhones have no element fullscreen at all — the button simply stays hidden
+  var fsSupported = !!(stageEl.requestFullscreen || stageEl.webkitRequestFullscreen);
+  if (fsSupported) {
+    el.fs.hidden = false;
+    el.fs.addEventListener('click', function () {
+      if (fsActive()) {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else {
+        var p = (stageEl.requestFullscreen || stageEl.webkitRequestFullscreen).call(stageEl);
+        if (p && p.catch) { p.catch(function () { /* denied — nothing to clean up */ }); }
+      }
+    });
+    document.addEventListener('fullscreenchange', fsChanged);
+    document.addEventListener('webkitfullscreenchange', fsChanged);
+  }
+
   el.question.addEventListener('input', function () { onInputChanged(true); });
   el.options.addEventListener('input', function () {
     state.drawn = [];
@@ -760,6 +847,7 @@
     buildPresets();
     buildPalettes();
     el.sound.setAttribute('aria-label', i18n.t(soundOn ? 'soundOnLabel' : 'soundOffLabel'));
+    fsLabel();
     el.remove.textContent = state.removedByAuto ? i18n.t('btnRestore') : i18n.t('btnRemove');
     // an untouched starter wheel follows the language; a wheel the visitor
     // typed themselves is theirs and stays exactly as it is
@@ -787,6 +875,7 @@
     var initial = i18n.detect();
     el.langSelect.value = initial;
     i18n.apply(initial);
+    fsLabel();
 
     var fromHash = readHash();
     var restored = null;
