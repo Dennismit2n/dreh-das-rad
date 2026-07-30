@@ -326,7 +326,7 @@ Code: github.com/Dennismit2n/dreh-das-rad
 
 Über Rückmeldungen freue ich mich, besonders wenn jemand am Zufall etwas findet.
 ```
-(2 309 Zeichen)
+(2 295 Zeichen)
 
 ---
 
@@ -357,7 +357,7 @@ No account, no build step, no dependencies beyond a local QR renderer, 12 langua
 dennismit2n.github.io/dreh-das-rad
 github.com/Dennismit2n/dreh-das-rad
 ```
-(1 875 Zeichen)
+(1 871 Zeichen)
 
 **r/Twitch — Titel**
 
@@ -381,7 +381,7 @@ Your question and options never leave the browser: they live in the URL fragment
 
 dennismit2n.github.io/dreh-das-rad
 ```
-(1 611 Zeichen)
+(1 605 Zeichen)
 
 ---
 
@@ -574,7 +574,7 @@ Läuft im Browser, kein Konto, 12 Sprachen, MIT. Frage und Optionen bleiben im F
 
 dennismit2n.github.io/dreh-das-rad
 ```
-(495 Zeichen von 500)
+(487 Zeichen von 500)
 
 ---
 
