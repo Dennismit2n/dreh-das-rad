@@ -70,4 +70,4 @@ The spin is arranged to end at the same wheel position it started from, so the l
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE). Two vendored files carry their own, both stated in their file headers: `js/vendor/qrcode.js` and `js/vendor/qrcode_UTF8.js` are the QR generator by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator) (MIT), and `js/vendor/count.js` is GoatCounter's counter script (ISC). "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.
