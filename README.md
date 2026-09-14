@@ -6,7 +6,7 @@
 
 A decision wheel for when nobody can decide. Type your options, spin the wheel, and let fate settle it — fairground lights, a ratcheting pointer and confetti included. Everything runs in your browser: no server, no account, nothing uploaded.
 
-The name is German for "spin the wheel", and it stays that way in all twelve languages — the tagline underneath does the translating.
+The name is German for "spin the wheel", and it stays that way in all fourteen languages — the tagline underneath does the translating.
 
 ## Features
 
@@ -20,7 +20,7 @@ The name is German for "spin the wheel", and it stays that way in all twelve lan
 - 🎨 **4 colour worlds** — Fairground, Neon, Pastel and Ink, each checked for label contrast in both light and dark mode
 - 🚀 **6 quick-start lists** — Yes/No, coin flip, numbers 1–10 plus food, what to watch and what to do, curated separately for each language
 - 🔗 **Share as a link, QR code or via your phone's share sheet** — the recipient gets the same wheel and spins it themselves
-- 🌍 **12 languages** — Deutsch, English, Español, Français, Italiano, Português, Türkçe, Русский, हिन्दी, 中文, 日本語, 한국어 (auto-detected)
+- 🌍 **14 languages** — Deutsch, English, Español, Français, Italiano, Nederlands, Polski, Português, Türkçe, Русский, हिन्दी, 中文, 日本語, 한국어 (auto-detected)
 - 📱 **Installable PWA** — put the wheel on your home screen; works fully offline
 - 🔒 **Radically private** — your options live in the URL *fragment* (`#…`), which browsers never send to any server
 

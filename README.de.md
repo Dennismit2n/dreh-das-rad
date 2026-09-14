@@ -18,7 +18,7 @@ Ein Entscheidungs-Glücksrad für alle Momente, in denen sich niemand festlegen 
 - 🎨 **4 Farbwelten** — Kirmes, Neon, Pastell und Tinte, jede in Hell und Dunkel auf Beschriftungskontrast geprüft
 - 🚀 **6 Schnellstart-Listen** — Ja/Nein, Kopf oder Zahl, Zahlen 1–10 sowie Essen, Was gucken? und Was machen?, für jede Sprache eigens zusammengestellt
 - 🔗 **Teilen als Link, QR-Code oder übers Handy-Teilen-Menü** — der Empfänger bekommt dasselbe Rad und dreht selbst
-- 🌍 **12 Sprachen** — Deutsch, English, Español, Français, Italiano, Português, Türkçe, Русский, हिन्दी, 中文, 日本語, 한국어 (automatisch erkannt)
+- 🌍 **14 Sprachen** — Deutsch, English, Español, Français, Italiano, Nederlands, Polski, Português, Türkçe, Русский, हिन्दी, 中文, 日本語, 한국어 (automatisch erkannt)
 - 📱 **Installierbare PWA** — Rad auf den Startbildschirm legen, funktioniert vollständig offline
 - 🔒 **Radikal privat** — deine Optionen stecken im URL-*Fragment* (`#…`), das Browser niemals an einen Server schicken
 
