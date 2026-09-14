@@ -131,7 +131,7 @@ $softBrush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromAr
 $dot = [string][char]0x00B7
 $g.DrawString("Dreh das Rad", $titleFont, $whiteBrush, 340, 190)
 $g.DrawString("Options in, wheel spins, fate decides.", $subFont, $creamBrush, 348, 320)
-$g.DrawString("shareable link $dot 4 colour worlds $dot 12 languages $dot open source", $smallFont, $softBrush, 350, 382)
+$g.DrawString("shareable link $dot 4 colour worlds $dot 14 languages $dot open source", $smallFont, $softBrush, 350, 382)
 
 $titleFont.Dispose(); $subFont.Dispose(); $smallFont.Dispose()
 $whiteBrush.Dispose(); $creamBrush.Dispose(); $softBrush.Dispose()
