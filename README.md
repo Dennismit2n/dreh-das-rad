@@ -18,10 +18,10 @@ The name is German for "spin the wheel", and it stays that way in all fourteen l
 - ➖ **Draw and remove** — take the winner off the wheel and keep spinning; drawn options are listed in order, so you can draw a whole running order in one go
 - 🕰️ **Recent spins** — the last results with timestamps, for when someone claims it "totally said pizza"; kept for this session only, never stored
 - 🔀 **Shuffle** — reorder the wheel with one click; the new order travels with the share link
-- ⛶ **Fullscreen** — blow the wheel up for the party table (where the browser supports it; iPhones don't)
+- ⛶ **Fullscreen** — blow the wheel up for the party table (where the browser supports it; iPhones don’t)
 - 🎨 **4 colour worlds** — Fairground, Neon, Pastel and Ink, each checked for label contrast in both light and dark mode
 - 🚀 **6 quick-start lists** — Yes/No, coin flip, numbers 1–10 plus food, what to watch and what to do, curated separately for each language
-- 🔗 **Share as a link, QR code or via your phone's share sheet** — the recipient gets the same wheel and spins it themselves
+- 🔗 **Share as a link, QR code or via your phone’s share sheet** — the recipient gets the same wheel and spins it themselves
 - 🌍 **14 languages** — Deutsch, English, Español, Français, Italiano, Nederlands, Polski, Português, Türkçe, Русский, हिन्दी, 中文, 日本語, 한국어 (auto-detected)
 - 📱 **Installable PWA** — put the wheel on your home screen; works fully offline
 - 🔒 **Radically private** — your options live in the URL *fragment* (`#…`), which browsers never send to any server
@@ -72,4 +72,4 @@ The spin is arranged to end at the same wheel position it started from, so the l
 
 ## License
 
-MIT — see [LICENSE](LICENSE). Two vendored files carry their own, both stated in their file headers: `js/vendor/qrcode.js` and `js/vendor/qrcode_UTF8.js` are the QR generator by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator) (MIT), and `js/vendor/count.js` is GoatCounter's counter script (ISC). "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.
+MIT — see [LICENSE](LICENSE). Two vendored files carry their own, both stated in their file headers: `js/vendor/qrcode.js` and `js/vendor/qrcode_UTF8.js` are the QR generator by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator) (MIT), and `js/vendor/count.js` is GoatCounter’s counter script (ISC). "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.
