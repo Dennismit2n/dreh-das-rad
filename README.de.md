@@ -6,6 +6,8 @@
 
 Ein Entscheidungs-Glücksrad für alle Momente, in denen sich niemand festlegen will. Optionen eintippen, Rad drehen, das Los entscheidet — mit Jahrmarktlampen, klackendem Zeiger und Konfetti. Alles läuft im Browser: kein Server, kein Konto, kein Upload.
 
+<img src="assets/screenshot-de.webp" alt="Dreh das Rad mit sechs Optionen in der Farbwelt Neon: links das Rad mit Zeiger und dem Knopf zum Drehen, rechts Frage, Optionen, Schnellstart-Vorlagen und Farbwelten, darunter der Link zum Teilen." width="640">
+
 ## Funktionen
 
 - 🎡 **Ein Rad, das sich wie ein Rad benimmt** — 3 Sekunden Dreh mit langem, zähem Auslauf, ein Zeiger, den jeder Nocken zur Seite schnippt, und ein Ratschen, das mit sinkender Drehzahl tiefer wird

@@ -8,6 +8,8 @@ A decision wheel for when nobody can decide. Type your options, spin the wheel, 
 
 The name is German for "spin the wheel", and it stays that way in all fourteen languages — the tagline underneath does the translating.
 
+<img src="assets/screenshot-de.webp" alt="Dreh das Rad with six options in the Neon colours: the wheel with its pointer and the spin button on the left; question, options, quick-start presets and colour sets on the right, with the share link underneath." width="640">
+
 ## Features
 
 - 🎡 **A wheel that behaves like a wheel** — 3-second spin with a long, slow tail, a pointer that gets flicked aside by every peg it passes, and a ratchet that drops in pitch as the wheel slows down
