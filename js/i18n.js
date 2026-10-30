@@ -12,6 +12,8 @@
 var I18N = {
   de: {
     _name: 'Deutsch',
+    installBtn: 'Installieren',
+    installDone: 'Als App installiert.',
     tagline: 'Optionen rein, Rad drehen – das Los entscheidet.',
     langLabel: 'Sprache',
     themeLabel: 'Darstellung',
@@ -63,6 +65,8 @@ var I18N = {
 
   en: {
     _name: 'English',
+    installBtn: 'Install',
+    installDone: 'Installed as an app.',
     tagline: 'Drop in your options, spin the wheel — fate decides.',
     langLabel: 'Language',
     themeLabel: 'Appearance',
@@ -114,6 +118,8 @@ var I18N = {
 
   es: {
     _name: 'Español',
+    installBtn: 'Instalar',
+    installDone: 'Instalación completada.',
     tagline: 'Escribe tus opciones, gira la ruleta: decide el azar.',
     langLabel: 'Idioma',
     themeLabel: 'Apariencia',
@@ -165,6 +171,8 @@ var I18N = {
 
   fr: {
     _name: 'Français',
+    installBtn: 'Installer',
+    installDone: 'Installation terminée.',
     tagline: 'Entrez vos options, tournez la roue — le sort décide.',
     langLabel: 'Langue',
     themeLabel: 'Apparence',
@@ -216,6 +224,8 @@ var I18N = {
 
   it: {
     _name: 'Italiano',
+    installBtn: 'Installa',
+    installDone: 'Installazione completata.',
     tagline: 'Scrivi le opzioni, gira la ruota: decide la sorte.',
     langLabel: 'Lingua',
     themeLabel: 'Aspetto',
@@ -267,6 +277,8 @@ var I18N = {
 
   nl: {
     _name: 'Nederlands',
+    installBtn: 'Installeren',
+    installDone: 'Als app geïnstalleerd.',
     tagline: 'Opties erin, rad draaien — het lot beslist.',
     langLabel: 'Taal',
     themeLabel: 'Weergave',
@@ -318,6 +330,8 @@ var I18N = {
 
   pl: {
     _name: 'Polski',
+    installBtn: 'Zainstaluj',
+    installDone: 'Zainstalowano jako aplikację.',
     tagline: 'Wpisz opcje, zakręć kołem — los zdecyduje.',
     langLabel: 'Język',
     themeLabel: 'Wygląd',
@@ -369,6 +383,8 @@ var I18N = {
 
   pt: {
     _name: 'Português',
+    installBtn: 'Instalar',
+    installDone: 'Instalação concluída.',
     tagline: 'Escreva as opções, gire a roda — a sorte decide.',
     langLabel: 'Idioma',
     themeLabel: 'Aparência',
@@ -420,6 +436,8 @@ var I18N = {
 
   tr: {
     _name: 'Türkçe',
+    installBtn: 'Yükle',
+    installDone: 'Uygulama olarak yüklendi.',
     tagline: 'Seçenekleri yaz, çarkı çevir — kararı şans versin.',
     langLabel: 'Dil',
     themeLabel: 'Görünüm',
@@ -471,6 +489,8 @@ var I18N = {
 
   ru: {
     _name: 'Русский',
+    installBtn: 'Установить',
+    installDone: 'Установлено как приложение.',
     tagline: 'Впиши варианты, крути колесо — решает жребий.',
     langLabel: 'Язык',
     themeLabel: 'Оформление',
@@ -522,6 +542,8 @@ var I18N = {
 
   hi: {
     _name: 'हिन्दी',
+    installBtn: 'इंस्टॉल करें',
+    installDone: 'ऐप के रूप में इंस्टॉल हो गया।',
     tagline: 'विकल्प लिखें, पहिया घुमाएँ — किस्मत तय करेगी।',
     langLabel: 'भाषा',
     themeLabel: 'रूप',
@@ -573,6 +595,8 @@ var I18N = {
 
   zh: {
     _name: '中文',
+    installBtn: '安装',
+    installDone: '已作为应用安装。',
     tagline: '输入选项，转动转盘——让运气决定。',
     langLabel: '语言',
     themeLabel: '外观',
@@ -624,6 +648,8 @@ var I18N = {
 
   ja: {
     _name: '日本語',
+    installBtn: 'インストール',
+    installDone: 'アプリとしてインストールしました。',
     tagline: '選択肢を入れて回すだけ。あとは運まかせ。',
     langLabel: '言語',
     themeLabel: '表示',
@@ -675,6 +701,8 @@ var I18N = {
 
   ko: {
     _name: '한국어',
+    installBtn: '설치',
+    installDone: '앱으로 설치되었습니다.',
     tagline: '선택지를 넣고 돌리세요 — 운명이 결정합니다.',
     langLabel: '언어',
     themeLabel: '화면',
