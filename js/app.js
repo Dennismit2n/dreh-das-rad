@@ -913,6 +913,36 @@
     renderDrawn();
     render();
 
+    /* ---------- install button ----------
+       Chrome, Edge and Samsung Internet fire beforeinstallprompt when the app can be installed;
+       the inline script in <head> keeps the event, because it can arrive before this file runs.
+       The button shows only then and opens the browser's install dialog. One event is good for
+       one dialog: after a cancel the button returns once the browser sends a new event.
+       It never shows inside the installed app. */
+    (function () {
+      var btn = document.getElementById('installBtn');
+      if (!btn) return;
+      function standalone() {
+        return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+      }
+      function update() { btn.hidden = !window.deferredInstall || standalone(); }
+      window.onInstallReady = update;
+      btn.addEventListener('click', function () {
+        var evt = window.deferredInstall;
+        window.deferredInstall = null;
+        update();
+        if (!evt) return;
+        try { var p = evt.prompt(); if (p && p.catch) p.catch(function () {}); } catch (err) { /* dialog not available */ }
+      });
+      window.addEventListener('appinstalled', function () {
+        window.deferredInstall = null;
+        update();
+        toast(i18n.t('installDone'));
+      });
+      update();
+    })();
+
+
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
         navigator.serviceWorker.register('./sw.js').catch(function () { /* offline is a bonus */ });
