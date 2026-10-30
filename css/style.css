@@ -172,6 +172,9 @@ body {
 main {
   flex: 1;
   display: grid;
+  /* Ohne Spaltenangabe wird die eine Spalte so breit wie ihr breitester Inhalt und schiebt die Seite
+     bei 320 px ueber den Rand; minmax(0, 1fr) haelt sie in der Bildschirmbreite. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 22px;
   margin-top: 22px;
   align-items: start;
@@ -182,7 +185,7 @@ main {
   .stage { position: sticky; top: 18px; }
 }
 
-.side { display: grid; gap: 18px; }
+.side { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
 
 /* ── stage ──────────────────────────────────────────────── */
 .stage { display: flex; flex-direction: column; align-items: center; gap: 14px; }
