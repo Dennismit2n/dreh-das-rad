@@ -175,6 +175,7 @@
       rot: state.rot,
       palette: state.palette,
       dark: isDark(),
+      vision: document.documentElement.getAttribute('data-vision'),
       lampMode: state.lampMode,
       lampT: state.lampT,
       pointerKick: state.pointerKick,
@@ -816,24 +817,67 @@
   }
 
   /* ── theme dropdown ─────────────────────────────────────────────*/
+  // One choice for the whole workshop (31.10.2026): every tool lives on the
+  // same origin and reads werkstatt.darstellung; KEY.theme is only read as a
+  // fallback. data-theme carries light/dark, data-vision high contrast
+  // (contrast), colour-blind (cvd) and inverted colours (invert). The wheel
+  // reads both, so every change redraws it. Keep the resolving in step with
+  // the head snippet in index.html.
   (function () {
-    [['system', 'themeSystem'], ['light', 'themeLight'], ['dark', 'themeDark']].forEach(function (pair) {
+    var SHARED = 'werkstatt.darstellung';
+    var THEMES = ['system', 'light', 'dark', 'hc-dark', 'hc-light', 'cvd-dark', 'cvd-light', 'invert'];
+    [['system', 'themeSystem'], ['light', 'themeLight'], ['dark', 'themeDark'],
+      ['hc-dark', 'themeHcDark'], ['hc-light', 'themeHcLight'],
+      ['cvd-dark', 'themeCvdDark'], ['cvd-light', 'themeCvdLight'],
+      ['invert', 'themeInvert']].forEach(function (pair) {
       var opt = document.createElement('option');
       opt.value = pair[0];
       opt.setAttribute('data-i18n', pair[1]);
       el.themeSelect.appendChild(opt);
     });
-    var stored = store.get(KEY.theme, 'system');
-    if (stored !== 'light' && stored !== 'dark') { stored = 'system'; }
-    el.themeSelect.value = stored;
+
+    // Values of other tools this one does not know count as their family
+    function stored() {
+      var v = store.get(SHARED, null) || store.get(KEY.theme, null);
+      if (THEMES.indexOf(v) >= 0) { return v; }
+      if (/dark/.test(v || '')) { return 'dark'; }
+      if (/light/.test(v || '')) { return 'light'; }
+      return 'system';
+    }
+    function media(q) { return window.matchMedia(q).matches; }
+    function apply(v) {
+      var theme = null;
+      var vision = null;
+      if (v === 'light' || v === 'dark') { theme = v; }
+      else if (v === 'hc-dark' || v === 'hc-light') { theme = v.slice(3); vision = 'contrast'; }
+      else if (v === 'cvd-dark' || v === 'cvd-light') { theme = v.slice(4); vision = 'cvd'; }
+      else if (v === 'invert') { vision = 'invert'; }
+      else if (media('(prefers-contrast: more)')) {
+        theme = media('(prefers-color-scheme: dark)') ? 'dark' : 'light';
+        vision = 'contrast';
+      }
+      var root = document.documentElement;
+      if (theme) { root.setAttribute('data-theme', theme); } else { root.removeAttribute('data-theme'); }
+      if (vision) { root.setAttribute('data-vision', vision); } else { root.removeAttribute('data-vision'); }
+      render();
+    }
+    el.themeSelect.value = stored();
 
     el.themeSelect.addEventListener('change', function () {
-      var v = el.themeSelect.value;
-      if (v === 'light' || v === 'dark') { document.documentElement.setAttribute('data-theme', v); }
-      else { document.documentElement.removeAttribute('data-theme'); }
-      store.set(KEY.theme, v);
-      render();
+      apply(el.themeSelect.value);
+      store.set(SHARED, el.themeSelect.value);
     });
+
+    // "System" follows the device live, also for "increase contrast"
+    ['(prefers-color-scheme: dark)', '(prefers-contrast: more)'].forEach(function (q) {
+      var list = window.matchMedia(q);
+      var follow = function () { if (stored() === 'system') { apply('system'); } };
+      if (list.addEventListener) { list.addEventListener('change', follow); } else { list.addListener(follow); }
+    });
+    // A choice made in another tool's tab, or before coming back here
+    function again() { var v = stored(); apply(v); el.themeSelect.value = v; }
+    window.addEventListener('storage', function (e) { if (e.key === SHARED) { again(); } });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) { again(); } });
   })();
 
   /* ── language ───────────────────────────────────────────────────*/

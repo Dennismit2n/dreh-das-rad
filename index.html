@@ -27,8 +27,10 @@
   <link rel="icon" href="./icons/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
   <link rel="stylesheet" href="./css/style.css">
-  <!-- Theme before first paint: stored choice wins, otherwise system decides via CSS. -->
-  <script>try{var t=localStorage.getItem('dreh-das-rad.theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+  <!-- Darstellung vor dem ersten Bild: die gemeinsame Wahl aller Werkzeuge (werkstatt.darstellung,
+       sonst der alte Schlüssel), sonst entscheidet das System per CSS. data-vision trägt Hoher
+       Kontrast, Farbenblind und Umkehr; dieselbe Auflösung steht in js/app.js (theme dropdown). -->
+  <script>(function(){var v=null,r=document.documentElement,m=window.matchMedia,t=null,s=null;try{v=localStorage.getItem('werkstatt.darstellung')||localStorage.getItem('dreh-das-rad.theme');}catch(e){}var d=!!(m&&m('(prefers-color-scheme: dark)').matches),k=!!(m&&m('(prefers-contrast: more)').matches);if(v==='light'||v==='dark'){t=v;}else if(v==='hc-dark'||v==='hc-light'){t=v.slice(3);s='contrast';}else if(v==='cvd-dark'||v==='cvd-light'){t=v.slice(4);s='cvd';}else if(v==='invert'){s='invert';}else if(v&&/dark/.test(v)){t='dark';}else if(v&&/light/.test(v)){t='light';}else if(k){t=d?'dark':'light';s='contrast';}if(t){r.setAttribute('data-theme',t);}if(s){r.setAttribute('data-vision',s);}})();</script>
   <!-- Analytics: GoatCounter (anonymous, cookieless — disclosed in the footer).
        count.js is vendored locally; the only external request is the count pixel.
        Wheel data lives in the #hash, which is never sent to any server.
@@ -193,7 +195,7 @@
           </button>
         </div>
         <div class="qr-wrap" id="qrWrap" hidden>
-          <div class="qr-box" id="qrBox" role="img" data-i18n-aria="btnQr"></div>
+          <div class="qr-box" id="qrBox" role="img" data-i18n-aria="btnQr" data-echt></div>
           <p class="qr-hint" data-i18n="qrHint">Scan to open the same wheel</p>
         </div>
         <p class="privacy-note">
