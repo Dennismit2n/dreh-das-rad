@@ -79,6 +79,19 @@ var Wheel = (function () {
       hub: '#c9d3de', hubRing: '#1f2937',
       // light pointer on the dark rim — the other way round it disappears
       pointer: '#e8eef5', pointerEdge: '#1f2937'
+    },
+    // Colour-blind mode of the workshop (data-vision="cvd", 31.10.2026): the
+    // Okabe-Ito colours stay apart with red-green and blue-yellow weakness
+    // alike. Ordered so that brightness alternates around the wheel. Not a
+    // choosable colour world: it is a viewer's display setting and replaces
+    // whatever world the wheel was shared with only on this screen.
+    farbsicher: {
+      seg: ['#e69f00', '#0072b2', '#f0e442', '#cc79a7', '#56b4e9', '#d55e00', '#009e73'],
+      rim: '#1f2937', rimDark: '#131a24',
+      rimEdge: '#3a4657', rimEdgeDark: '#25303f',
+      lamp: '#e8d9b0', lampGlow: '#c9a95f',
+      hub: '#c9d3de', hubRing: '#1f2937',
+      pointer: '#e8eef5', pointerEdge: '#1f2937'
     }
   };
 
@@ -173,7 +186,8 @@ var Wheel = (function () {
    * }
    */
   function draw(ctx, W, H, state) {
-    var pal = PALETTES[state.palette] || PALETTES.kirmes;
+    // vision: null | 'contrast' | 'cvd' | 'invert' (the workshop's display aid)
+    var pal = state.vision === 'cvd' ? PALETTES.farbsicher : (PALETTES[state.palette] || PALETTES.kirmes);
     var dark = !!state.dark;
     var items = state.items || [];
     var n = items.length;
@@ -222,9 +236,15 @@ var Wheel = (function () {
         ctx.fill();
       }
 
-      // separators keep low-contrast neighbours (pastell!) readable as segments
-      ctx.strokeStyle = dark ? 'rgba(0,0,0,0.38)' : 'rgba(255,255,255,0.55)';
-      ctx.lineWidth = Math.max(1, R * 0.006);
+      // separators keep low-contrast neighbours (pastell!) readable as segments;
+      // high contrast draws them solid and twice as thick
+      if (state.vision === 'contrast') {
+        ctx.strokeStyle = dark ? '#000000' : '#ffffff';
+        ctx.lineWidth = Math.max(2, R * 0.012);
+      } else {
+        ctx.strokeStyle = dark ? 'rgba(0,0,0,0.38)' : 'rgba(255,255,255,0.55)';
+        ctx.lineWidth = Math.max(1, R * 0.006);
+      }
       for (var s = 0; s < n && n > 1; s++) {
         var a = s * seg + state.rot;
         ctx.beginPath();

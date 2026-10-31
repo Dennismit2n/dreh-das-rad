@@ -498,3 +498,78 @@ main {
   .result-card { animation: none; }
   .spin-btn, .toast { transition: none; }
 }
+
+/* ── Sehhilfen: Hoher Kontrast, Farbenblind, Umgekehrte Farben ───────────
+   (31.10.2026) Eine Wahl für die ganze Werkstatt: localStorage
+   „werkstatt.darstellung“, alle Werkzeuge liegen auf einem Ursprung. Das
+   Kopf-Skript setzt data-theme (light/dark, wie bisher) und data-vision
+   (contrast, cvd, invert). Die Farbblöcke oben bleiben, wie sie sind. Das Rad
+   selbst liest data-vision in wheel.js: farbsichere Felder bei cvd, kräftige
+   Trennlinien bei contrast. */
+
+/* Hoher Kontrast dunkel: Schwarz, Schrift #E0E0E0 (15,91:1). Die Akzente der
+   vier Farbwelten halten im Dunkeln schon 7:1 (schlechteste 11,49). Knöpfe
+   füllen sich mit dem Akzent und tragen schwarze Schrift. */
+:root[data-vision="contrast"][data-theme="dark"] {
+  --bg: #000000;
+  --panel: #000000;
+  --text: #E0E0E0;
+  --text-soft: #C4C4C4;   /* 12,04 */
+  --border: #A0A0A0;      /* 8,03 */
+  --shadow: none;
+}
+:root[data-vision="contrast"][data-theme="dark"] body[data-palette] { --accent-fill: var(--accent); --accent-ink: #000000; }
+
+/* Hoher Kontrast hell: Weiß, Schrift Schwarz, jeder Akzent auf 7:1
+   nachgedunkelt (gleicher Farbton), Knöpfe in Akzent mit weißer Schrift */
+:root[data-vision="contrast"][data-theme="light"] {
+  --bg: #FFFFFF;
+  --panel: #FFFFFF;
+  --text: #000000;
+  --text-soft: #2B2B2B;   /* 14,16 */
+  --border: #585757;      /* 7,20 */
+  --shadow: none;
+  --accent: #AC1917;      /* Kirmes, 7,23 */
+}
+:root[data-vision="contrast"][data-theme="light"] body[data-palette="neon"] { --accent: #6C26D8; }    /* 7,23 */
+:root[data-vision="contrast"][data-theme="light"] body[data-palette="pastell"] { --accent: #9B2B61; } /* 7,21 */
+:root[data-vision="contrast"][data-theme="light"] body[data-palette="tinte"] { --accent: #33445E; }   /* 9,86 */
+:root[data-vision="contrast"][data-theme="light"] body[data-palette] { --accent-fill: var(--accent); --accent-ink: #FFFFFF; }
+
+:root[data-vision="contrast"] :is(#langSelect, #themeSelect, .install-btn, .icon-btn, .panel, .btn, .field input, .field textarea, .preset, .palette-btn) { border-width: 2px; }
+:root[data-vision="contrast"] .palette-btn[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--accent); }
+:root[data-vision="contrast"] .wheel-wrap,
+:root[data-vision="contrast"] .wheel-wrap * { filter: none; }
+:root[data-vision="contrast"] :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+:root[data-vision="contrast"] .site-footer a { text-decoration: underline; }
+:root[data-vision="contrast"] .site-footer .sep { opacity: 1; }
+
+/* Am Handy teilen sich Darstellung und Sprache eine Zeile. Ein Auswahlfeld ist
+   so breit wie sein längster Eintrag, und das ist seit den acht Darstellungen
+   „Hoher Kontrast dunkel“. Ohne diese Regel rutschten die Felder bei 320 px
+   in zwei Zeilen; die Darstellung bekommt den größeren Teil. */
+@media (max-width: 560px) {
+  .header-controls .sel-wrap { flex: 1 1 0; min-width: 0; }
+  .header-controls .sel-wrap:has(#themeSelect) { flex-grow: 1.6; }
+  .header-controls .sel-wrap select { width: 100%; min-width: 0; }
+}
+
+/* Farbenblind: Das Rad zeichnet seine Felder in Okabe-Ito-Farben (wheel.js).
+   Die Seite selbst trägt keine Bedeutungsfarben, hier gibt es nichts zu
+   tauschen. */
+
+/* Umgekehrte Farben wie der Farbfilter von Windows: Rad und Seite drehen um,
+   der QR-Code zum Teilen wird ein zweites Mal umgedreht und bleibt echt. */
+:root[data-vision="invert"] { filter: invert(1); }
+:root[data-vision="invert"] :is(img:not([src*=".svg"]), video, [data-echt]):not([data-echt] *) { filter: invert(1); }
+:root[data-vision="invert"] .site-footer .sep { opacity: 1; }
+/* Umdrehen erhält den WCAG-Kontrast nicht: die dunkle Knopfschrift der
+   Kirmes-Welt käme umgedreht auf 4,41. Schwarz hält umgedreht 5,2. Die
+   anderen drei Welten setzen ihre eigene und halten schon (6,76 bis 7,90). */
+@media (prefers-color-scheme: dark) {
+  :root[data-vision="invert"] { --accent-ink: #000000; }
+}
+@media print {
+  :root[data-vision="invert"],
+  :root[data-vision="invert"] :is(img:not([src*=".svg"]), video, [data-echt]):not([data-echt] *) { filter: none; }
+}
