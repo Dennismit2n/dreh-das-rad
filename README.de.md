@@ -40,9 +40,7 @@ Ein physikalisch simuliertes Rad wäre nicht besser, sondern schlechter: Wo es s
 
 Die ganze App besteht aus einer Handvoll statischer Dateien. Frage und Optionen werden in den Teil der URL nach dem `#` kodiert — das Fragment —, das dein Browser niemals überträgt. Ein geteiltes Rad bleibt also zwischen dir und den Leuten, denen du den Link schickst. Es gibt keinerlei Serverseite: Flugmodus an, es läuft trotzdem.
 
-Der Seitentitel bleibt bewusst statisch und enthält nie deine Frage, damit nichts Persönliches in die Besucherzählung sickern kann.
-
-*Statistik:* Die App nutzt [GoatCounter](https://www.goatcounter.com) für anonyme, cookiefreie Besucherzählung (im Fußbereich deklariert). Das Skript liegt lokal unter `js/vendor/count.js`; die einzige externe Anfrage ist das Zählpixel.
+Der Seitentitel bleibt bewusst statisch und enthält nie deine Frage.
 
 ## Entwicklung
 
@@ -70,4 +68,4 @@ Der Dreh endet bei derselben Radstellung, bei der er beginnt — dadurch läuft 
 
 ## Lizenz
 
-MIT — siehe [LICENSE](LICENSE). Zwei lokal eingebundene Fremddateien tragen ihre eigene Lizenz, beide im Kopf der Datei angegeben: `js/vendor/qrcode.js` und `js/vendor/qrcode_UTF8.js` sind der QR-Generator von [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator) (MIT), und `js/vendor/count.js` ist das Zählskript von GoatCounter (ISC). „QR Code“ ist eine eingetragene Marke von DENSO WAVE INCORPORATED.
+MIT — siehe [LICENSE](LICENSE). Der lokal eingebundene QR-Generator trägt seine eigene Lizenz, im Kopf der Dateien angegeben: `js/vendor/qrcode.js` und `js/vendor/qrcode_UTF8.js` sind von [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator) (MIT). „QR Code“ ist eine eingetragene Marke von DENSO WAVE INCORPORATED.

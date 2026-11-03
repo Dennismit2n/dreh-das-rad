@@ -44,8 +44,6 @@ The whole app is a handful of static files. Your question and options are encode
 
 The page title is deliberately kept static and never includes your question, so nothing personal can leak into the visit counter.
 
-*Analytics:* the app uses [GoatCounter](https://www.goatcounter.com) for anonymous, cookieless visit counting (disclosed in the footer). The script is vendored locally in `js/vendor/count.js`; the only external request is the count pixel.
-
 ## Development
 
 No build step, no dependencies.
@@ -72,4 +70,4 @@ The spin is arranged to end at the same wheel position it started from, so the l
 
 ## License
 
-MIT — see [LICENSE](LICENSE). Two vendored files carry their own, both stated in their file headers: `js/vendor/qrcode.js` and `js/vendor/qrcode_UTF8.js` are the QR generator by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator) (MIT), and `js/vendor/count.js` is GoatCounter’s counter script (ISC). "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.
+MIT — see [LICENSE](LICENSE). The vendored QR generator carries its own, stated in its file headers: `js/vendor/qrcode.js` and `js/vendor/qrcode_UTF8.js` are by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator) (MIT). "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.

@@ -65,7 +65,6 @@ var I18N = {
     offlineNote: 'Funktioniert sogar offline.',
     footerSource: 'Quelloffen auf GitHub',
     footerTranslate: 'Übersetzungen teils maschinell, Korrekturen nehme ich gern an.',
-    footerAnalytics: 'Anonyme Besucherzählung (GoatCounter, ohne Cookies).',
     shareText: 'Dreh mit mir das Rad:'
   },
 
@@ -124,7 +123,6 @@ var I18N = {
     offlineNote: 'Even works offline.',
     footerSource: 'Open source on GitHub',
     footerTranslate: 'Some translations are machine-made, and I’m happy to take corrections.',
-    footerAnalytics: 'Anonymous visit counting (GoatCounter, no cookies).',
     shareText: 'Spin the wheel with me:'
   },
 
@@ -183,7 +181,6 @@ var I18N = {
     offlineNote: 'Funciona incluso sin conexión.',
     footerSource: 'Código abierto en GitHub',
     footerTranslate: 'Algunas traducciones son automáticas. Acepto correcciones con gusto.',
-    footerAnalytics: 'Conteo anónimo de visitas (GoatCounter, sin cookies).',
     shareText: 'Gira la ruleta conmigo:'
   },
 
@@ -242,7 +239,6 @@ var I18N = {
     offlineNote: 'Fonctionne même hors ligne.',
     footerSource: 'Code source sur GitHub',
     footerTranslate: 'Certaines traductions sont automatiques, j’accepte volontiers les corrections.',
-    footerAnalytics: 'Comptage anonyme des visites (GoatCounter, sans cookies).',
     shareText: 'Tourne la roue avec moi :'
   },
 
@@ -301,7 +297,6 @@ var I18N = {
     offlineNote: 'Funziona anche offline.',
     footerSource: 'Codice aperto su GitHub',
     footerTranslate: 'Alcune traduzioni sono automatiche, accetto volentieri correzioni.',
-    footerAnalytics: 'Conteggio anonimo delle visite (GoatCounter, senza cookie).',
     shareText: 'Gira la ruota con me:'
   },
 
@@ -360,7 +355,6 @@ var I18N = {
     offlineNote: 'Werkt zelfs offline.',
     footerSource: 'Opensource op GitHub',
     footerTranslate: 'Sommige vertalingen zijn machinaal gemaakt, correcties neem ik graag aan.',
-    footerAnalytics: 'Anonieme bezoekerstelling (GoatCounter, zonder cookies).',
     shareText: 'Draai met mij aan het rad:'
   },
 
@@ -419,7 +413,6 @@ var I18N = {
     offlineNote: 'Działa nawet bez internetu.',
     footerSource: 'Otwarty kod na GitHubie',
     footerTranslate: 'Część tłumaczeń powstała maszynowo, chętnie przyjmę poprawki.',
-    footerAnalytics: 'Anonimowe liczenie odwiedzin (GoatCounter, bez ciasteczek).',
     shareText: 'Zakręć kołem razem ze mną:'
   },
 
@@ -478,7 +471,6 @@ var I18N = {
     offlineNote: 'Funciona até offline.',
     footerSource: 'Código aberto no GitHub',
     footerTranslate: 'Algumas traduções são automáticas, aceito correções com prazer.',
-    footerAnalytics: 'Contagem anônima de visitas (GoatCounter, sem cookies).',
     shareText: 'Gire a roda comigo:'
   },
 
@@ -537,7 +529,6 @@ var I18N = {
     offlineNote: 'Çevrimdışıyken bile çalışır.',
     footerSource: 'GitHub’da açık kaynak',
     footerTranslate: 'Bazı çeviriler otomatik oluşturuldu, düzeltmeleri memnuniyetle alırım.',
-    footerAnalytics: 'Anonim ziyaret sayımı (GoatCounter, çerezsiz).',
     shareText: 'Benimle çarkı çevir:'
   },
 
@@ -596,7 +587,6 @@ var I18N = {
     offlineNote: 'Работает даже офлайн.',
     footerSource: 'Открытый код на GitHub',
     footerTranslate: 'Часть переводов сделана автоматически, исправления приму с радостью.',
-    footerAnalytics: 'Анонимный подсчёт визитов (GoatCounter, без cookie).',
     shareText: 'Крути колесо со мной:'
   },
 
@@ -655,7 +645,6 @@ var I18N = {
     offlineNote: 'ऑफ़लाइन भी चलता है।',
     footerSource: 'GitHub पर ओपन सोर्स',
     footerTranslate: 'कुछ अनुवाद मशीन से किए गए हैं, सुधार मैं खुशी से लेता हूँ।',
-    footerAnalytics: 'गुमनाम विज़िट गिनती (GoatCounter, बिना कुकी)।',
     shareText: 'मेरे साथ पहिया घुमाओ:'
   },
 
@@ -714,7 +703,6 @@ var I18N = {
     offlineNote: '离线也能用。',
     footerSource: '在 GitHub 上开源',
     footerTranslate: '部分翻译由机器生成，我很乐意接受指正。',
-    footerAnalytics: '匿名访问统计（GoatCounter，无 Cookie）。',
     shareText: '和我一起转转盘：'
   },
 
@@ -773,7 +761,6 @@ var I18N = {
     offlineNote: 'オフラインでも動きます。',
     footerSource: 'GitHub でオープンソース',
     footerTranslate: '一部の翻訳は機械翻訳です。修正はいつでも歓迎します。',
-    footerAnalytics: '匿名のアクセス集計（GoatCounter、Cookie なし）。',
     shareText: '一緒にルーレットを回そう:'
   },
 
@@ -832,7 +819,6 @@ var I18N = {
     offlineNote: '오프라인에서도 작동해요.',
     footerSource: 'GitHub 오픈 소스',
     footerTranslate: '일부 번역은 기계 번역이에요. 수정 제안은 기꺼이 받아요.',
-    footerAnalytics: '익명 방문 집계 (GoatCounter, 쿠키 없음).',
     shareText: '나랑 같이 룰렛 돌리자:'
   }
 };
@@ -871,7 +857,7 @@ var i18n = (function () {
     if (I18N[lang]) { current = lang; }
     try { localStorage.setItem(STORAGE_KEY, current); } catch (e) { /* ignore */ }
     document.documentElement.lang = current;
-    // Only the tab title; GoatCounter keeps counting under the fixed "dreh-das-rad" (see index.html)
+    // Only the tab title
     document.title = 'Dreh das Rad · ' + t('docTitle');
     var nodes = document.querySelectorAll('[data-i18n]');
     for (var i = 0; i < nodes.length; i++) {

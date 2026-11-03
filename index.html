@@ -31,12 +31,6 @@
        sonst der alte Schlüssel), sonst entscheidet das System per CSS. data-vision trägt Hoher
        Kontrast, Farbenblind und Umkehr; dieselbe Auflösung steht in js/app.js (theme dropdown). -->
   <script>(function(){var v=null,r=document.documentElement,m=window.matchMedia,t=null,s=null;try{v=localStorage.getItem('werkstatt.darstellung')||localStorage.getItem('dreh-das-rad.theme');}catch(e){}var d=!!(m&&m('(prefers-color-scheme: dark)').matches),k=!!(m&&m('(prefers-contrast: more)').matches);if(v==='light'||v==='dark'){t=v;}else if(v==='hc-dark'||v==='hc-light'){t=v.slice(3);s='contrast';}else if(v==='cvd-dark'||v==='cvd-light'){t=v.slice(4);s='cvd';}else if(v==='invert'){s='invert';}else if(v&&/dark/.test(v)){t='dark';}else if(v&&/light/.test(v)){t='light';}else if(k){t=d?'dark':'light';s='contrast';}if(t){r.setAttribute('data-theme',t);}if(s){r.setAttribute('data-vision',s);}})();</script>
-  <!-- Analytics: GoatCounter (anonymous, cookieless — disclosed in the footer).
-       count.js is vendored locally; the only external request is the count pixel.
-       Wheel data lives in the #hash, which is never sent to any server.
-       The title is pinned to a static value so a personalised document.title
-       (the user's question) can never reach the count pixel. -->
-  <script data-goatcounter="https://dennis-mit-2n.goatcounter.com/count" data-goatcounter-settings='{"title": "dreh-das-rad"}' async src="./js/vendor/count.js"></script>
   <!-- Install button: Chrome, Edge and Samsung Internet may announce installability before
        app.js runs, so the event is kept here until the button picks it up (see app.js). -->
   <script>window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.deferredInstall=e;if(window.onInstallReady)window.onInstallReady();});</script>
@@ -223,8 +217,6 @@
     </a>
     <span class="sep" aria-hidden="true">·</span>
     <span data-i18n="footerTranslate">Some translations are machine-made, and I’m happy to take corrections.</span>
-    <span class="sep" aria-hidden="true">·</span>
-    <span data-i18n="footerAnalytics">Anonymous visit counting.</span>
     <span class="sep" aria-hidden="true">·</span>
     <span class="footer-copyright">© 2026 Dennis_mit_2n</span>
   </footer>
