@@ -4,45 +4,45 @@
 
 **➡️ Try it: [dennismit2n.github.io/dreh-das-rad](https://dennismit2n.github.io/dreh-das-rad/)** &nbsp;·&nbsp; 🇩🇪 [Deutsche Version dieser Seite](README.de.md)
 
-A decision wheel for when nobody can decide. Type your options, spin the wheel, and let fate settle it — fairground lights, a ratcheting pointer and confetti included. Everything runs in your browser: no server, no account, nothing uploaded.
+A decision wheel for when nobody can decide. Type your options, spin the wheel, and let fate settle it, fairground lights, a ratcheting pointer and confetti included. Everything runs in your browser: no server, no account, nothing uploaded.
 
-The name is German for "spin the wheel", and it stays that way in all fourteen languages — the tagline underneath does the translating.
+The name is German for "spin the wheel", and it stays that way in all fourteen languages. The tagline underneath does the translating.
 
 <img src="assets/screenshot-de.webp" alt="Dreh das Rad with six options in the Neon colours: the wheel with its pointer and the spin button on the left; question, options, quick-start presets and colour sets on the right, with the share link underneath." width="640">
 
 ## Features
 
-- 🎡 **A wheel that behaves like a wheel** — 3-second spin with a long, slow tail, a pointer that gets flicked aside by every peg it passes, and a ratchet that drops in pitch as the wheel slows down
-- 💡 **Fairground lights** — the bulbs on the rim sit dark until the wheel stops, then blast on and chase around the rim
-- ⚖️ **Weighting** — write `Papa cooks x3` and that option takes three slots instead of one
-- ➖ **Draw and remove** — take the winner off the wheel and keep spinning; drawn options are listed in order, so you can draw a whole running order in one go
-- 🕰️ **Recent spins** — the last results with timestamps, for when someone claims it "totally said pizza"; kept for this session only, never stored
-- 🔀 **Shuffle** — reorder the wheel with one click; the new order travels with the share link
-- ⛶ **Fullscreen** — blow the wheel up for the party table (where the browser supports it; iPhones don’t)
-- 🎨 **4 colour worlds** — Fairground, Neon, Pastel and Ink, each checked for label contrast in both light and dark mode
-- 🚀 **6 quick-start lists** — Yes/No, coin flip, numbers 1–10 plus food, what to watch and what to do, curated separately for each language
-- 🔗 **Share as a link, QR code or via your phone’s share sheet** — the recipient gets the same wheel and spins it themselves
-- 🌍 **14 languages** — Deutsch, English, Español, Français, Italiano, Nederlands, Polski, Português, Türkçe, Русский, हिन्दी, 中文, 日本語, 한국어 (auto-detected)
-- 📱 **Installable PWA** — put the wheel on your home screen; works fully offline
-- 🔒 **Radically private** — your options live in the URL *fragment* (`#…`), which browsers never send to any server
+- 🎡 **A wheel that behaves like a wheel:** 3-second spin with a long, slow tail, a pointer that gets flicked aside by every peg it passes, and a ratchet that drops in pitch as the wheel slows down
+- 💡 **Fairground lights:** the bulbs on the rim sit dark until the wheel stops, then blast on and chase around the rim
+- ⚖️ **Weighting:** write `Papa cooks x3` and that option takes three slots instead of one
+- ➖ **Draw and remove:** take the winner off the wheel and keep spinning; drawn options are listed in order, so you can draw a whole running order in one go
+- 🕰️ **Recent spins:** the last results with timestamps, for when someone claims it "totally said pizza"; kept for this session only, never stored
+- 🔀 **Shuffle:** reorder the wheel with one click; the new order travels with the share link
+- ⛶ **Fullscreen:** blow the wheel up for the party table (where the browser supports it; iPhones don’t)
+- 🎨 **4 colour worlds:** Fairground, Neon, Pastel and Ink, each checked for label contrast in both light and dark mode
+- 🚀 **6 quick-start lists:** Yes/No, coin flip, numbers 1–10 plus food, what to watch and what to do, curated separately for each language
+- 🔗 **Share as a link, QR code or via your phone’s share sheet:** the recipient gets the same wheel and spins it themselves
+- 🌍 **14 languages:** Deutsch, English, Español, Français, Italiano, Nederlands, Polski, Português, Türkçe, Русский, हिन्दी, 中文, 日本語, 한국어 (auto-detected)
+- 📱 **Installable PWA:** put the wheel on your home screen; works offline after the first visit
+- 🔒 **Radically private:** your options live in the URL *fragment* (`#…`), which browsers never send to any server
 
 ## Is it actually fair?
 
-Yes, and deliberately so. The winner is drawn **before** the wheel moves, using `crypto.getRandomValues` with rejection sampling — so there is no modulo bias and every slot has exactly the same chance. Only then is the target rotation calculated so the wheel comes to rest on that slot. **The animation displays the result; it does not produce it.**
+Yes, and deliberately so. The winner is drawn **before** the wheel moves, using `crypto.getRandomValues` with rejection sampling, so there is no modulo bias and every slot has exactly the same chance. Only then is the target rotation calculated so the wheel comes to rest on that slot. **The animation displays the result; it does not produce it.**
 
 Simulating a physical wheel instead would be worse, not better: the landing spot would depend on frame rate and floating-point drift. This way the odds are provable, and the same draw works when animations are switched off.
 
 ## Accessibility
 
-- `prefers-reduced-motion` is respected: no spin, no confetti, no flashing lights — the result simply fades in. Since the spin is rather the point of this app, there is also a visible **"Let the wheel spin"** switch to override that, and it is remembered.
+- `prefers-reduced-motion` is respected: no spin, no confetti, no flashing lights, the result simply fades in. Since the spin is rather the point of this app, there is also a visible **"Let the wheel spin"** switch to override that, and it is remembered.
 - Every segment label is drawn in whichever of ink or white contrasts better with its background, and `tools/check-contrast.js` fails the build if any pairing drops below WCAG AA (4.5:1). Neighbouring segments are checked with CIE ΔE, because two colours can be equally bright and still perfectly easy to tell apart.
 - Sound only ever plays as a direct result of pressing "spin", and the speaker button in the header mutes it for good.
 
 ## Privacy
 
-The whole app is a handful of static files. Your question and options are encoded into the part of the URL after `#` — the fragment — which your browser never transmits, so a shared wheel stays between you and the people you send it to. There is no server-side anything: turn on airplane mode and it still works.
+The whole app is a handful of static files. Your question and options are encoded into the part of the URL after `#`, the fragment, which your browser never transmits, so a shared wheel stays between you and the people you send it to. There is no server-side anything: turn on airplane mode and it still works.
 
-The page title is deliberately kept static and never includes your question, so nothing personal can leak into the visit counter.
+The page title is deliberately kept static and never includes your question.
 
 ## Development
 
@@ -64,10 +64,10 @@ node tools/check-contrast.js && node tools/check-i18n.js
 
 ### The README animation
 
-`tools/gif-recorder.html` records a spin using the very same renderer the app uses (`js/wheel.js`), so what you see in the recording is exactly what visitors get. Open it via the dev server, press **Aufnehmen**, and it writes both `promo.gif` and `promo.webp` (animated) to your downloads folder — move them into `assets/`.
+`tools/gif-recorder.html` records a spin using the very same renderer the app uses (`js/wheel.js`), so what you see in the recording is exactly what visitors get. Open it via the dev server, press **Aufnehmen**, and it writes both `promo.gif` and `promo.webp` (animated) to your downloads folder. Move them into `assets/`.
 
 The spin is arranged to end at the same wheel position it started from, so the loop has no visible jump. Defaults produce roughly 620 KB of GIF and 440 KB of WebP; the README embeds the WebP.
 
 ## License
 
-MIT — see [LICENSE](LICENSE). The vendored QR generator carries its own, stated in its file headers: `js/vendor/qrcode.js` and `js/vendor/qrcode_UTF8.js` are by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator) (MIT). "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.
+MIT, see [LICENSE](LICENSE). The vendored QR generator carries its own, stated in its file headers: `js/vendor/qrcode.js` and `js/vendor/qrcode_UTF8.js` are by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator) (MIT). "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.
