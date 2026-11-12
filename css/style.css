@@ -618,7 +618,7 @@ main {
 #langSelect,
 #themeSelect,
 .install-btn {
-  --bsl-i: 2px;
+  --bsl-i: 2.5px;
   --bsl-g: 4.5px;
   --bsl-a: 1px;
   background: var(--beschlag), var(--panel);
@@ -628,7 +628,7 @@ main {
   .icon-btn { --bsl-l: color-mix(in srgb, var(--accent, var(--accent-fill)) 45%, transparent); }
 }
 .icon-btn {
-  --bsl-i: 2px;
+  --bsl-i: 2.5px;
   --bsl-g: 4px;
   --bsl-a: 0.5px;
   background: var(--beschlag), var(--panel);

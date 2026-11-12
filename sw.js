@@ -1,7 +1,7 @@
 /* dreh-das-rad service worker — bump CACHE on every deploy so clients update cleanly */
 'use strict';
 
-var CACHE = 'dreh-das-rad-v16';
+var CACHE = 'dreh-das-rad-v17';
 var ASSETS = [
   './',
   './index.html',
