@@ -8,7 +8,7 @@ A decision wheel for when nobody can decide. Type your options, spin the wheel, 
 
 The name is German for "spin the wheel", and it stays that way in all fourteen languages. The tagline underneath does the translating.
 
-<img src="assets/screenshot-de.webp" alt="Dreh das Rad with six options in the Neon colours: the wheel with its pointer and the spin button on the left; question, options, quick-start presets and colour sets on the right, with the share link underneath." width="640">
+<img src="assets/screenshot-de.webp" alt="Dreh das Rad with six options in the Neon colors: the wheel with its pointer and the spin button on the left; question, options, quick-start presets and color sets on the right, with the share link underneath." width="640">
 
 ## Features
 
@@ -19,7 +19,7 @@ The name is German for "spin the wheel", and it stays that way in all fourteen l
 - 🕰️ **Recent spins:** the last results with timestamps, for when someone claims it "totally said pizza"; kept for this session only, never stored
 - 🔀 **Shuffle:** reorder the wheel with one click; the new order travels with the share link
 - ⛶ **Fullscreen:** blow the wheel up for the party table (where the browser supports it; iPhones don’t)
-- 🎨 **4 colour worlds:** Fairground, Neon, Pastel and Ink, each checked for label contrast in both light and dark mode
+- 🎨 **4 color worlds:** Fairground, Neon, Pastel and Ink, each checked for label contrast in both light and dark mode
 - 🚀 **6 quick-start lists:** Yes/No, coin flip, numbers 1–10 plus food, what to watch and what to do, curated separately for each language
 - 🔗 **Share as a link, QR code or via your phone’s share sheet:** the recipient gets the same wheel and spins it themselves
 - 🌍 **14 languages:** Deutsch, English, Español, Français, Italiano, Nederlands, Polski, Português, Türkçe, Русский, हिन्दी, 中文, 日本語, 한국어 (auto-detected)
@@ -35,7 +35,7 @@ Simulating a physical wheel instead would be worse, not better: the landing spot
 ## Accessibility
 
 - `prefers-reduced-motion` is respected: no spin, no confetti, no flashing lights, the result simply fades in. Since the spin is rather the point of this app, there is also a visible **"Let the wheel spin"** switch to override that, and it is remembered.
-- Every segment label is drawn in whichever of ink or white contrasts better with its background, and `tools/check-contrast.js` fails the build if any pairing drops below WCAG AA (4.5:1). Neighbouring segments are checked with CIE ΔE, because two colours can be equally bright and still perfectly easy to tell apart.
+- Every segment label is drawn in whichever of ink or white contrasts better with its background, and `tools/check-contrast.js` fails the build if any pairing drops below WCAG AA (4.5:1). Neighboring segments are checked with CIE ΔE, because two colors can be equally bright and still perfectly easy to tell apart.
 - Sound only ever plays as a direct result of pressing "spin", and the speaker button in the header mutes it for good.
 
 ## Privacy
@@ -54,7 +54,7 @@ node tools/dev-server.js
 
 Then open http://localhost:8617. Edit, reload, done.
 
-Two checks worth running after touching colours or translations:
+Two checks worth running after touching colors or translations:
 
 ```bash
 node tools/check-contrast.js && node tools/check-i18n.js
